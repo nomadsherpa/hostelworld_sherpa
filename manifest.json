@@ -17,6 +17,9 @@
       "matches": [
         "*://*.hostelworld.com/pwa/wds/hosteldetails*"
       ],
+      "js": [
+        "gallery.js"
+      ],
       "css": [
         "css/gallery.css"
       ]
