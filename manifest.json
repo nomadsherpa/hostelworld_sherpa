@@ -15,7 +15,7 @@
         "general.js"
       ]
     },
-    // Hostel details page
+    // Property details page
     {
       "matches": [
         "*://*.hostelworld.com/pwa/wds/hosteldetails*"
@@ -25,6 +25,15 @@
       ],
       "css": [
         "css/gallery.css"
+      ]
+    },
+    // Search page
+    {
+      "matches": [
+        "*://*.hostelworld.com/pwa/wds/s*"
+      ],
+      "js": [
+        "search_page.js"
       ]
     }
   ]
