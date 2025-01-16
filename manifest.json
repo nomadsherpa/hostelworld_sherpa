@@ -6,6 +6,15 @@
   "content_scripts": [
     {
       "matches": [
+        "*://*.hostelworld.com/*"
+      ],
+      "js": [
+        "general.js"
+      ]
+    },
+    // Hostel details page
+    {
+      "matches": [
         "*://*.hostelworld.com/pwa/wds/hosteldetails*"
       ],
       "css": [
