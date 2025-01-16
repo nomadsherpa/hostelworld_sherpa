@@ -3,6 +3,9 @@
   "name": "Hostelworld Sherpa",
   "version": "0.0.1",
   "description": "Improves the UX of Hostelworld",
+  "permissions": [
+    "storage"
+  ],
   "content_scripts": [
     {
       "matches": [
