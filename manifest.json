@@ -2,5 +2,15 @@
   "manifest_version": 3,
   "name": "Hostelworld Sherpa",
   "version": "0.0.1",
-  "description": "Improves the UX of Hostelworld"
+  "description": "Improves the UX of Hostelworld",
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.hostelworld.com/pwa/wds/hosteldetails*"
+      ],
+      "css": [
+        "css/gallery.css"
+      ]
+    }
+  ]
 }
