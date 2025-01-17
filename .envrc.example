@@ -1,0 +1,1 @@
+alias enable_visual_testing="export HEADLESS=false"
