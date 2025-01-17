@@ -9,7 +9,7 @@ Capybara.register_driver :remote_selenium_chrome do |app|
   options.add_argument("load-extension=/extension")
 
   if ENV['HEADLESS'] != 'false'
-    options.add_argument("--headless")
+    options.add_argument("--headless=new")
     options.add_argument("--disable-gpu")
   end
 
