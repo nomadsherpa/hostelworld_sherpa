@@ -6,6 +6,7 @@ Capybara.register_driver :remote_selenium_chrome do |app|
   options.add_argument("--no-sandbox")
   options.add_argument("--disable-dev-shm-usage")
   options.add_argument("--start-maximized")
+  options.add_argument("load-extension=/extension")
 
   Capybara::Selenium::Driver.new(
     app,
