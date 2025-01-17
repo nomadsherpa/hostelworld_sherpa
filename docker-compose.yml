@@ -1,9 +1,23 @@
 version: "3.9"
 services:
+  test_runner:
+    container_name: hostelworld-sherpa-test-runner
+    build:
+      context: .
+      dockerfile: dockerfiles/rspec.dockerfile
+    depends_on:
+      - selenium
+    working_dir: /test_runner
+    volumes:
+      - .:/test_runner
+    command: tail -f /dev/null
+    networks:
+      - test-network
+
   selenium:
+    container_name: hostelworld-sherpa-selenium
     image: selenium/standalone-chromium:131.0
     hostname: selenium
-    container_name: hostelworld-sherpa-selenium
     ports:
       - 127.0.0.1:4444:4444
       - 127.0.0.1:5900:5900
@@ -12,3 +26,8 @@ services:
       - SE_VNC_NO_PASSWORD=1
     volumes:
       - ./extension:/extension
+    networks:
+      - test-network
+
+networks:
+  test-network:

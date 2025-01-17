@@ -1,1 +1,10 @@
 alias enable_visual_testing="export HEADLESS=false"
+alias disable_visual_testing="unset HEADLESS"
+
+t() {
+  if [ -z "$HEADLESS" ]; then
+    make test
+  else
+    make test_visual
+  fi
+}

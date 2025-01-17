@@ -5,8 +5,8 @@ help:
 
 .PHONY: test
 test:
-	rspec
+	docker-compose run test_runner rspec
 
 .PHONY: test_visual
 test_visual:
-	HEADLESS=false rspec
+	docker-compose run -e HEADLESS=false test_runner rspec
