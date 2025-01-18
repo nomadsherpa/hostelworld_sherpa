@@ -5,8 +5,12 @@ help:
 
 .PHONY: test
 test:
-	docker-compose run test_runner rspec
+	./bin/test
 
 .PHONY: test_visual
 test_visual:
-	docker-compose run -e HEADLESS=false test_runner rspec
+	./bin/test_visual
+
+.PHONY: lint
+lint:
+	docker-compose run test_runner rubocop
