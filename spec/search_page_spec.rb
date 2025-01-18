@@ -14,12 +14,12 @@ describe "Search page - Open property in a new tab from the map view", type: :fe
     end
 
     # Click on the property card on the map while holding the command key
-    property_card_on_map = first(".map-container img.active-slide")
+    property_card_on_map = first(".map-container a")
     page.driver.browser.action
-        .key_down(:meta)
+        .key_down(:control)
         .move_to(property_card_on_map.native)
         .click
-        .key_up(:meta)
+        .key_up(:control)
         .perform
 
     # The property details page should open in a new tab

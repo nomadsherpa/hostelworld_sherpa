@@ -11,7 +11,7 @@ class SearchPage {
               'horizontal'
             )
           ) {
-            SearchPage.hijackPropertyClickOnMap(element);
+            SearchPage.addFullCardLink(element);
           }
         });
       }
@@ -23,33 +23,40 @@ class SearchPage {
     });
   }
 
-  // Open the property in a new tab if the user is holding the cmd/ctrl key or
-  // using the middle mouse button. Otherwise, open the property in the
-  // current tab.
-  static hijackPropertyClickOnMap(propertyCardElement) {
-    const photoElement = propertyCardElement.querySelector('.property-photos');
-    const infoElement = propertyCardElement.querySelector(
-      '.property-info-container'
-    );
-
-    // Add both click and mousedown event listeners
-    ['click', 'mousedown'].forEach((eventType) => {
-      photoElement.addEventListener(eventType, SearchPage.clickHandler);
-      infoElement.addEventListener(eventType, SearchPage.clickHandler);
-    });
-  }
-
-  static clickHandler(e) {
-    if (!e.metaKey && !e.ctrlKey && !(e.type === 'mousedown' && e.button === 1))
-      return;
-
-    e.stopPropagation();
-    e.preventDefault();
-
+  // Create a new anchor that wraps the entire card content
+  static addFullCardLink(propertyCardElement) {
     const url = document.querySelector(
       '.property-card-container.horizontal.selected'
     ).href;
-    window.open(url, '_blank');
+
+    const anchorElement = document.createElement('a');
+    anchorElement.href = url;
+    anchorElement.style.cssText = `
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      text-decoration: none;
+      background: transparent;
+    `;
+
+    anchorElement.addEventListener('click', (e) => {
+      if (e.metaKey || e.ctrlKey) {
+        // Bypass Hostelworld's default click handler
+        e.stopPropagation();
+      } else {
+        // Fall back to Hostelworld's default click handler
+        e.preventDefault();
+      }
+    });
+
+    propertyCardElement.style.position = 'relative';
+    propertyCardElement.insertBefore(
+      anchorElement,
+      propertyCardElement.firstChild
+    );
   }
 }
 
