@@ -11,4 +11,4 @@ if [ -z "$(docker compose ps -q)" ]; then
   done
 fi
 
-docker compose exec -e HEADLESS=false test_runner rspec
+docker compose exec -e HEADLESS=false test_runner rspec "$@"

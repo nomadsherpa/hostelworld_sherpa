@@ -7,15 +7,15 @@ help:
 
 .PHONY: test
 test:
-	./bin/test
+	./bin/test $(filter-out $@,$(MAKECMDGOALS))
 
 .PHONY: test_visual
 test_visual:
-	./bin/test_visual
+	./bin/test_visual $(filter-out $@,$(MAKECMDGOALS))
 
 .PHONY: lint
 lint:
-	./bin/lint
+	./bin/lint $(filter-out $@,$(MAKECMDGOALS))
 
 .PHONY: lint_fix
 lint_fix:
