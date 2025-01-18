@@ -5,8 +5,6 @@ services:
     build:
       context: .
       dockerfile: dockerfiles/rspec.dockerfile
-    depends_on:
-      - selenium
     working_dir: /test_runner
     volumes:
       - .:/test_runner
