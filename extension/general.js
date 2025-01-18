@@ -32,14 +32,13 @@ function handleEscapeKey(event) {
 class DefaultCurrencyManager {
   static up() {
     chrome.storage.local.get(['defaultCurrency'], (result) => {
-      if (result.defaultCurrency) {
-        if (
-          DefaultCurrencyManager.currencyCookie() === result.defaultCurrency
-        ) {
-          DefaultCurrencyManager.setupChangeListener();
-        } else {
-          DefaultCurrencyManager.changeToDefault(result.defaultCurrency);
-        }
+      if (
+        result.defaultCurrency &&
+        DefaultCurrencyManager.currencyCookie() !== result.defaultCurrency
+      ) {
+        DefaultCurrencyManager.changeToDefault(result.defaultCurrency);
+      } else {
+        DefaultCurrencyManager.setupChangeListener();
       }
     });
   }
