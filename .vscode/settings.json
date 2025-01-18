@@ -1,0 +1,9 @@
+{
+  // General file helpers
+  "files.insertFinalNewline": true,
+  // Ruby settings
+  "ruby.format": "rubocop",
+  "ruby.lint": {
+    "rubocop": true
+  }
+}

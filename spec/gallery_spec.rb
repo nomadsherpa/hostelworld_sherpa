@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe "Gallery - Arrow navigation", type: :feature do
   scenario do
     visit "https://www.hostelworld.com/pwa/wds/hosteldetails.php/Rom-Casa-Hostel-Da-Nang/Da-Nang/278390"

@@ -10,3 +10,6 @@ t() {
     make test_visual
   fi
 }
+
+alias lint="make lint"
+alias lint_fix="make lint_fix"

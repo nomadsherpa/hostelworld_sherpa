@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+# Start the test runner container if it's not running already
+if [ -z "$(docker compose ps -q test_runner)" ]; then
+  docker compose up -d test_runner
+fi
+
+docker compose exec test_runner rubocop "$@"
