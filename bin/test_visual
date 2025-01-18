@@ -3,6 +3,12 @@
 # Start the containers if they're not running already
 if [ -z "$(docker compose ps -q)" ]; then
   docker compose up -d
+
+  echo -n "Waiting for Selenium to start"
+  until curl -s -o /dev/null http://localhost:4444/wd/hub/status; do
+    echo -n "."
+    sleep 0.4
+  done
 fi
 
 docker compose exec -e HEADLESS=false test_runner rspec
