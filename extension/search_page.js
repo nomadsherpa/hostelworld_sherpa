@@ -36,7 +36,7 @@ class SearchPage {
 
   static clickHandler(e) {
     // Open the property in the current tab if the user is not holding the meta key
-    if (!e.metaKey) return;
+    if (!e.metaKey && !e.ctrlKey) return;
 
     e.stopPropagation();
     e.preventDefault();
