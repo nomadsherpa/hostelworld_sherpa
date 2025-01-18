@@ -1,3 +1,5 @@
+export COMPOSE_PROJECT_NAME="hostelworld-sherpa"
+
 alias enable_visual_testing="export HEADLESS=false"
 alias disable_visual_testing="unset HEADLESS"
 
