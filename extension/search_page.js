@@ -23,20 +23,25 @@ class SearchPage {
     });
   }
 
-  // Open properties in new tab when they are clicked on the map while holding
-  // the cmd key
+  // Open the property in a new tab if the user is holding the cmd/ctrl key or
+  // using the middle mouse button. Otherwise, open the property in the
+  // current tab.
   static hijackPropertyClickOnMap(propertyCardElement) {
-    propertyCardElement
-      .querySelector('.property-photos')
-      .addEventListener('click', SearchPage.clickHandler);
-    propertyCardElement
-      .querySelector('.property-info-container')
-      .addEventListener('click', SearchPage.clickHandler);
+    const photoElement = propertyCardElement.querySelector('.property-photos');
+    const infoElement = propertyCardElement.querySelector(
+      '.property-info-container'
+    );
+
+    // Add both click and mousedown event listeners
+    ['click', 'mousedown'].forEach((eventType) => {
+      photoElement.addEventListener(eventType, SearchPage.clickHandler);
+      infoElement.addEventListener(eventType, SearchPage.clickHandler);
+    });
   }
 
   static clickHandler(e) {
-    // Open the property in the current tab if the user is not holding the meta key
-    if (!e.metaKey && !e.ctrlKey) return;
+    if (!e.metaKey && !e.ctrlKey && !(e.type === 'mousedown' && e.button === 1))
+      return;
 
     e.stopPropagation();
     e.preventDefault();
