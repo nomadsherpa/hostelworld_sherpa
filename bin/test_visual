@@ -1,8 +1,13 @@
 #!/usr/bin/env bash
 
-# Start the containers if they're not running already
-if [ -z "$(docker compose ps -q)" ]; then
-  docker compose up -d
+# Start the test runner container if it's not running already
+if [ -z "$(docker compose ps -q test_runner)" ]; then
+  docker compose up -d test_runner
+fi
+
+# Start the selenium container if it's not running already
+if [ -z "$(docker compose ps -q selenium)" ]; then
+  docker compose up -d selenium
 
   echo -n "Waiting for Selenium to start"
   until curl -s -o /dev/null http://localhost:4444/wd/hub/status; do
