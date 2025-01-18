@@ -1,4 +1,4 @@
-FROM ruby:3.4.1
+FROM ruby:3.4.1-slim
 
 WORKDIR /test_runner
 
