@@ -11,5 +11,7 @@ t() {
   fi
 }
 
+alias rs="t"
+
 alias lint="make lint"
 alias lint_fix="make lint_fix"
