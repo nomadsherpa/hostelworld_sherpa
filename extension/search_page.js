@@ -57,6 +57,37 @@ class SearchPage {
       anchorElement,
       propertyCardElement.firstChild
     );
+
+    SearchPage.updateFullCardLinkOnPropertyChange(
+      propertyCardElement,
+      anchorElement
+    );
+  }
+
+  static updateFullCardLinkOnPropertyChange(
+    propertyCardElement,
+    anchorElement
+  ) {
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        mutation.addedNodes.forEach((node) => {
+          if (node.tagName !== 'IMG') return;
+
+          const newUrl = document.querySelector(
+            '.property-card-container.horizontal.selected'
+          ).href;
+
+          if (newUrl) {
+            anchorElement.href = newUrl;
+          }
+        });
+      });
+    });
+
+    observer.observe(propertyCardElement, {
+      childList: true,
+      subtree: true,
+    });
   }
 }
 
