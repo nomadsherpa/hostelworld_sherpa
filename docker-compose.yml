@@ -4,7 +4,7 @@ services:
     container_name: hostelworld-sherpa-test-runner
     build:
       context: .
-      dockerfile: dockerfiles/rspec.dockerfile
+      dockerfile: dockerfiles/test_runner.dockerfile
     working_dir: /test_runner
     volumes:
       - .:/test_runner
