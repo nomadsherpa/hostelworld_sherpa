@@ -11,7 +11,7 @@ class SearchPage {
               'horizontal'
             )
           ) {
-            SearchPage.addFullCardLink(element);
+            SearchPage.addPropertyCardLink(element);
           }
         });
       }
@@ -24,7 +24,7 @@ class SearchPage {
   }
 
   // Create a new anchor that wraps the entire card content
-  static addFullCardLink(propertyCardElement) {
+  static addPropertyCardLink(propertyCardElement) {
     const url = document.querySelector(
       '.property-card-container.horizontal.selected'
     ).href;
@@ -58,13 +58,13 @@ class SearchPage {
       propertyCardElement.firstChild
     );
 
-    SearchPage.updateFullCardLinkOnPropertyChange(
+    SearchPage.updatePropertyCardLinkOnPropertyChange(
       propertyCardElement,
       anchorElement
     );
   }
 
-  static updateFullCardLinkOnPropertyChange(
+  static updatePropertyCardLinkOnPropertyChange(
     propertyCardElement,
     anchorElement
   ) {
