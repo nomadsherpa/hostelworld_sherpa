@@ -2,6 +2,7 @@
 
 require "capybara/rspec"
 require "selenium-webdriver"
+require "./spec/support/mitmdump_proxy"
 
 Capybara.register_driver :remote_selenium_chrome do |app|
   options = Selenium::WebDriver::Chrome::Options.new
@@ -9,6 +10,27 @@ Capybara.register_driver :remote_selenium_chrome do |app|
   options.add_argument("--disable-dev-shm-usage")
   options.add_argument("--start-maximized")
   options.add_argument("load-extension=/extension")
+
+  if ENV["HEADLESS"] != "false"
+    options.add_argument("--headless=new")
+    options.add_argument("--disable-gpu")
+  end
+
+  Capybara::Selenium::Driver.new(
+    app,
+    browser: :remote,
+    url: "http://selenium:4444/wd/hub",
+    options: options
+  )
+end
+Capybara.register_driver :remote_selenium_chrome_proxy do |app|
+  options = Selenium::WebDriver::Chrome::Options.new
+  options.add_argument("--no-sandbox")
+  options.add_argument("--disable-dev-shm-usage")
+  options.add_argument("--start-maximized")
+  options.add_argument("load-extension=/extension")
+  options.add_argument("--proxy-server=host.docker.internal:8080")
+  options.add_argument("--ignore-certificate-errors") # Required for MITM proxy
 
   if ENV["HEADLESS"] != "false"
     options.add_argument("--headless=new")
@@ -42,6 +64,15 @@ Capybara.default_max_wait_time = 30
 #
 # See https://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|
+  config.around(:each, :proxy) do |example|
+    MitmdumpProxy.start(cassette_name(example))
+    Capybara.default_driver = :remote_selenium_chrome_proxy
+
+    example.run
+  ensure
+    MitmdumpProxy.stop
+  end
+
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest
   # assertions if you prefer.
@@ -121,4 +152,15 @@ RSpec.configure do |config|
   #   # test failures related to randomization by passing the same `--seed` value
   #   # as the one that triggered the failure.
   #   Kernel.srand config.seed
+end
+
+def cassette_name(example)
+  if example.metadata[:proxy].is_a?(TrueClass)
+    [
+      example.metadata[:example_group][:description].gsub(" ", "_").downcase,
+      example.metadata[:description].gsub(" ", "_").downcase
+    ].join("__")
+  else
+    example.metadata[:proxy].to_s
+  end
 end

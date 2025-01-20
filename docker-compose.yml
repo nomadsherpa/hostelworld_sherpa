@@ -2,6 +2,9 @@ version: "3.9"
 services:
   test_runner:
     container_name: hostelworld-sherpa-test-runner
+    hostname: test_runner
+    ports:
+      - 127.0.0.1:8080:8080
     build:
       context: .
       dockerfile: dockerfiles/test_runner.dockerfile
