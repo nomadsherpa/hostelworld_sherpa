@@ -1,3 +1,4 @@
+export DOCKER_CONTAINER_NAME="hostelworld-sherpa-test-runner"
 export COMPOSE_PROJECT_NAME="hostelworld-sherpa"
 
 alias enable_visual_testing="export HEADLESS=false"
@@ -15,3 +16,6 @@ alias rs="t"
 
 alias lint="make lint"
 alias lint_fix="make lint_fix"
+
+alias rest="docker compose restart"
+alias c="de irb"
