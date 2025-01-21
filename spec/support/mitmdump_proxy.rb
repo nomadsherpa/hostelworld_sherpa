@@ -14,12 +14,23 @@ class MitmdumpProxy
   end
 
   def self.start_replay_proxy(cassette_name)
-    @pid = spawn("mitmdump --server-replay #{CASSETTE_DIR}/#{cassette_name}.flows --set connection_strategy=lazy")
+    command = [
+      "mitmdump",
+      "--server-replay", "#{CASSETTE_DIR}/#{cassette_name}.flows",
+      "--set", "connection_strategy=lazy"
+    ]
+
+    @pid = spawn(*command)
     Process.detach(@pid)
   end
 
   def self.start_record_proxy(cassette_name)
-    @pid = spawn("mitmdump --save-stream-file #{CASSETTE_DIR}/#{cassette_name}.flows")
+    command = [
+      "mitmdump",
+      "--save-stream-file", "#{CASSETTE_DIR}/#{cassette_name}.flows"
+    ]
+
+    @pid = spawn(*command)
     Process.detach(@pid)
   end
 
