@@ -4,7 +4,6 @@
 # It is used to save and replay HTTP traffic.
 class MitmdumpProxy
   CASSETTE_DIR = File.join("spec", "fixtures", "mitmproxy_flows")
-  @pid = nil
 
   def self.use_cassette(cassette_name)
     if File.exist?("#{CASSETTE_DIR}/#{cassette_name}.flows")
@@ -25,10 +24,16 @@ class MitmdumpProxy
   end
 
   def self.eject_cassette
-    return unless @pid
+    return if @pid.nil?
 
-    Process.kill("TERM", @pid)
-    Process.wait(@pid)
+    pid = @pid
     @pid = nil
+
+    Process.kill("TERM", pid)
+    Process.wait(pid)
   end
+end
+
+at_exit do
+  MitmdumpProxy.eject_cassette
 end
