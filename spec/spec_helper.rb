@@ -65,12 +65,12 @@ Capybara.default_max_wait_time = 30
 # See https://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|
   config.around(:each, :proxy) do |example|
-    MitmdumpProxy.start(cassette_name(example))
+    MitmdumpProxy.use_cassette(build_cassette_name(example.metadata))
     Capybara.default_driver = :remote_selenium_chrome_proxy
 
     example.run
   ensure
-    MitmdumpProxy.stop
+    MitmdumpProxy.eject_cassette
   end
 
   # rspec-expectations config goes here. You can use an alternate
@@ -154,13 +154,13 @@ RSpec.configure do |config|
   #   Kernel.srand config.seed
 end
 
-def cassette_name(example)
-  if example.metadata[:proxy].is_a?(TrueClass)
+def build_cassette_name(example_metadata)
+  if example_metadata[:proxy].is_a?(TrueClass)
     [
-      example.metadata[:example_group][:description].gsub(" ", "_").downcase,
-      example.metadata[:description].gsub(" ", "_").downcase
+      example_metadata[:example_group][:description].gsub(" ", "_").downcase,
+      example_metadata[:description].gsub(" ", "_").downcase
     ].join("__")
   else
-    example.metadata[:proxy].to_s
+    example_metadata[:proxy].to_s
   end
 end

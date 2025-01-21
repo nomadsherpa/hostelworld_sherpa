@@ -1,10 +1,13 @@
 # frozen_string_literal: true
 
+# This class is a wrapper around the mitmdump command line tool.
+# It is used to save and replay HTTP traffic.
 class MitmdumpProxy
+  CASSETTE_DIR = File.join("spec", "fixtures", "mitmproxy_flows")
   @pid = nil
 
-  def self.start(cassette_name)
-    if File.exist?("spec/fixtures/mitmproxy_flows/#{cassette_name}.flows")
+  def self.use_cassette(cassette_name)
+    if File.exist?("#{CASSETTE_DIR}/#{cassette_name}.flows")
       start_replay_proxy(cassette_name)
     else
       start_record_proxy(cassette_name)
@@ -12,16 +15,16 @@ class MitmdumpProxy
   end
 
   def self.start_replay_proxy(cassette_name)
-    @pid = spawn("mitmdump --server-replay spec/fixtures/mitmproxy_flows/#{cassette_name}.flows --set connection_strategy=lazy")
+    @pid = spawn("mitmdump --server-replay #{CASSETTE_DIR}/#{cassette_name}.flows --set connection_strategy=lazy")
     Process.detach(@pid)
   end
 
   def self.start_record_proxy(cassette_name)
-    @pid = spawn("mitmdump --save-stream-file spec/fixtures/mitmproxy_flows/#{cassette_name}.flows")
+    @pid = spawn("mitmdump --save-stream-file #{CASSETTE_DIR}/#{cassette_name}.flows")
     Process.detach(@pid)
   end
 
-  def self.stop
+  def self.eject_cassette
     return unless @pid
 
     Process.kill("TERM", @pid)
