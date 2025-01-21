@@ -16,6 +16,7 @@ class MitmdumpProxy
   def self.start_replay_proxy(cassette_name)
     command = [
       "mitmdump",
+      "-s", "spec/support/mitmdump_response_override.py",
       "--server-replay", "#{CASSETTE_DIR}/#{cassette_name}.flows",
       "--set", "connection_strategy=lazy"
     ]
@@ -27,6 +28,7 @@ class MitmdumpProxy
   def self.start_record_proxy(cassette_name)
     command = [
       "mitmdump",
+      "-s", "spec/support/mitmdump_response_override.py",
       "--save-stream-file", "#{CASSETTE_DIR}/#{cassette_name}.flows"
     ]
 
