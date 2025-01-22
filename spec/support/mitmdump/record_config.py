@@ -1,9 +1,8 @@
 from mitmproxy import ctx, http
 
+# Store requests only for whitelisted domains and block everything else with 404
 class ConditionalResponse:
     def __init__(self):
-        # Domains that should pass through normally. Everything else will
-        # be blocked with a 204 response without accessing the network.
         self.allowed_domains = {
             "hostelworld.com",
             "hwstatic.com"
@@ -15,11 +14,13 @@ class ConditionalResponse:
 
         if host not in self.allowed_domains and second_level_domain not in self.allowed_domains:
             print("== Blocked domain", host)
-
+            # Send 404 Not Found response
             flow.response = http.Response.make(
-                204,  # status code
-                b"",  # response body
-                {"Content-Type": "text/plain"}  # headers
+                404,  # status code
+                b"Not Found",  # simple error message
+                {"Content-Type": "text/plain"}  # restored headers since we have a body
             )
+            # Kill the flow after sending response to prevent storing it
+            flow.kill()
 
 addons = [ConditionalResponse()]
