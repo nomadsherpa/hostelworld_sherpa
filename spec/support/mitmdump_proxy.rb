@@ -39,11 +39,9 @@ class MitmdumpProxy
   def self.eject_cassette
     return if @pid.nil?
 
-    pid = @pid
+    Process.kill("TERM", @pid)
     @pid = nil
-
-    Process.kill("TERM", pid)
-    Process.wait(pid)
+    Process.waitall
   end
 end
 
