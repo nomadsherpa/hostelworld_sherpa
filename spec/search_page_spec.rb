@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-describe "Search page - Open property in a new tab from the map view", type: :feature do
-  scenario do
+describe "Search page", type: :feature do
+  scenario "Open property in a new tab from the map view", proxy: :search_page__new_tab do
     # Visit the search results page
     visit "https://www.hostelworld.com/pwa/wds/s?q=Da%20Nang,%20Vietnam&country=Da%20Nang&city=Da%20Nang&type=city&id=716"
 
