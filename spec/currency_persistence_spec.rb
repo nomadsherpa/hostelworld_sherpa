@@ -10,6 +10,8 @@ describe "Currency Persistence", type: :feature do
     currency_container = all(".pill-content.menu-pill")[2]
     expect(currency_container.text).not_to eq("USD")
 
+    # Wait until JS builds the currency picker
+    expect(page).to have_css(".currency-picker")
     # When the user selects USD
     currency_container.click
     find('[aria-label="US Dollar (USD)"]').click
