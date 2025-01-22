@@ -13,6 +13,9 @@ describe "Search page - Open property in a new tab from the map view", type: :fe
       all(".property-pins button").last.click
     end
 
+    # Wait for the link to get its href attribute
+    expect(page).to have_css(".map-container .property-card-container a[href]")
+
     # Click on the property card on the map while holding the command key
     property_card_on_map = first(".map-container a")
     page.driver.browser.action
