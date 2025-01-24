@@ -70,9 +70,10 @@ Capybara.default_max_wait_time = 30
 RSpec.configure do |config|
   config.around(:each, :proxy) do |example|
     MitmdumpProxy.use_cassette(build_cassette_name(example.metadata))
-    Capybara.default_driver = :remote_selenium_chrome_proxy
 
-    example.run
+    Capybara.using_driver(:remote_selenium_chrome_proxy) do
+      example.run
+    end
   ensure
     MitmdumpProxy.eject_cassette
   end
