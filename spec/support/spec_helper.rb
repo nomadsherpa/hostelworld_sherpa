@@ -83,7 +83,7 @@ RSpec.configure do |config|
     require "debug"
 
     config.after do |example|
-      debugger if example.exception
+      debugger if example.exception # rubocop:disable Lint/Debugger
     end
   end
 
