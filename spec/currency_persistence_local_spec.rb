@@ -1,10 +1,11 @@
 # frozen_string_literal: true
 
-describe "Currency Persistence", type: :feature do
+describe "Currency Persistence", :local_only, type: :feature do
   let(:base_url) { "https://www.hostelworld.com" }
 
   scenario "Currency selection persists across sessions" do
     visit base_url
+    page.evaluate_script("document.body.classList.add('not-reloaded')")
 
     # USD is not selected
     currency_container = all(".pill-content.menu-pill")[2]
@@ -17,7 +18,7 @@ describe "Currency Persistence", type: :feature do
     find('[aria-label="US Dollar (USD)"]').click
 
     # Wait for the page to reload
-    expect(page).to have_no_css(".modal-overlay")
+    expect(page).to have_no_css("body.not-reloaded")
 
     # When the user closes the browser and opens it again
     Capybara.reset_session!

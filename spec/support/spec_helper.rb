@@ -91,6 +91,12 @@ RSpec.configure do |config|
     Capybara.current_session.driver.quit
   end
 
+  if ENV["CI"] == "true"
+    config.filter_run_excluding local_only: true
+  else
+    config.filter_run_excluding ci_only: true
+  end
+
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest
   # assertions if you prefer.
