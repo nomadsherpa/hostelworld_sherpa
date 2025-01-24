@@ -31,7 +31,7 @@ Capybara.register_driver :remote_selenium_chrome_proxy do |app|
   options.add_argument("--disable-dev-shm-usage")
   options.add_argument("--start-maximized")
   options.add_argument("load-extension=/extension")
-  options.add_argument("--proxy-server=host.docker.internal:8080")
+  options.add_argument("--proxy-server=test_runner:8080")
   options.add_argument("--ignore-certificate-errors") # Required for MITM proxy
 
   options.add_preference("profile.managed_default_content_settings.images", 2)

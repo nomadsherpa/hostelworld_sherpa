@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "socket"
+
 # This class is a wrapper around the mitmdump command line tool.
 # It is used to save and replay HTTP traffic.
 class MitmdumpProxy
@@ -23,6 +25,7 @@ class MitmdumpProxy
 
     @pid = spawn(*command)
     Process.detach(@pid)
+    wait_for_mitmdump_to_start
   end
 
   def self.start_record_proxy(cassette_name)
@@ -34,6 +37,7 @@ class MitmdumpProxy
 
     @pid = spawn(*command)
     Process.detach(@pid)
+    wait_for_mitmdump_to_start
   end
 
   def self.eject_cassette
@@ -42,6 +46,15 @@ class MitmdumpProxy
     Process.kill("TERM", @pid)
     @pid = nil
     Process.waitall
+  end
+
+  def self.wait_for_mitmdump_to_start
+    loop do
+      TCPSocket.new("localhost", 8080).close
+      break
+    rescue Errno::ECONNREFUSED
+      sleep 0.2
+    end
   end
 end
 

@@ -1,0 +1,36 @@
+name: CI
+
+on:
+  push:
+    paths-ignore:
+      - ".envrc.example"
+      - ".gitignore"
+      - ".rspec"
+      - "cspell.json"
+      - "Makefile"
+      - "README.md"
+  pull_request:
+    paths-ignore:
+      - ".envrc.example"
+      - ".gitignore"
+      - ".rspec"
+      - "cspell.json"
+      - "Makefile"
+      - "README.md"
+
+permissions: read-all
+
+defaults:
+  run:
+    shell: bash
+    working-directory: "./"
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      - name: Run tests
+        run: make test
