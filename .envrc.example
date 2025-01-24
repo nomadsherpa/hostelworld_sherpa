@@ -7,17 +7,11 @@ alias disable_visual_testing="unset HEADLESS"
 alias enable_rspec_debug_mode="export RSPEC_DEBUG_MODE=true"
 alias disable_rspec_debug_mode="unset RSPEC_DEBUG_MODE"
 
-t() {
-  if [ -z "$HEADLESS" ]; then
-    make test "$@"
-  else
-    make test_visual "$@"
-  fi
-}
-
+alias t="make test"
 alias rs="t"
 
 alias lint="make lint"
+alias lintf="make lint_fix"
 alias lint_fix="make lint_fix"
 
 alias rest="docker compose restart"

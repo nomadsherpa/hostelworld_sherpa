@@ -16,4 +16,8 @@ if [ -z "$(docker compose ps -q selenium)" ]; then
   done
 fi
 
-docker compose exec test_runner rspec "$@"
+# docker compose exec test_runner rspec "$@"
+docker compose exec \
+  ${HEADLESS:+"-e HEADLESS=$HEADLESS"} \
+  ${RSPEC_DEBUG_MODE:+"-e RSPEC_DEBUG_MODE=$RSPEC_DEBUG_MODE"} \
+  test_runner rspec "$@"
