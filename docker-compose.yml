@@ -1,4 +1,3 @@
-version: "3.9"
 services:
   test_runner:
     container_name: hostelworld-sherpa-test-runner
