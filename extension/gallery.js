@@ -10,6 +10,72 @@ class Gallery {
 
   up() {
     document.addEventListener('keydown', this.handleKeyPress);
+
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        mutation.addedNodes.forEach((node) => {
+          if (node.classList && node.classList.contains('modal-overlay')) {
+            this.setUpPreviousAndNextImageLoading();
+          }
+        });
+      });
+    });
+
+    observer.observe(this.galleryContainer, {
+      childList: true,
+      subtree: true,
+    });
+  }
+
+  setUpPreviousAndNextImageLoading() {
+    const thumbnailElements =
+      this.galleryContainer.querySelectorAll('.modal-body img');
+    this.galleryImageIDs = Array.from(thumbnailElements).map(
+      (thumbnailElement) => {
+        return thumbnailElement.getAttribute('src').split('/').pop();
+      }
+    );
+
+    // Listen of navigation between images
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.attributeName !== 'src') return;
+        if (!mutation.target.classList.contains('lightbox-content')) return;
+
+        this.loadNextAndPreviousImages(mutation.target.src);
+      });
+    });
+
+    observer.observe(this.galleryContainer, {
+      attributes: true,
+      subtree: true,
+      attributeFilter: ['src'],
+    });
+  }
+
+  loadNextAndPreviousImages(currentImageUrl) {
+    const currentImageID = currentImageUrl.split('/').pop();
+    const currentImageIndex = this.galleryImageIDs.findIndex(
+      (imageID) => imageID === currentImageID
+    );
+
+    const previousImageIndex = currentImageIndex - 1;
+    const nextImageIndex = currentImageIndex + 1;
+
+    if (previousImageIndex >= 0) {
+      const previousImageID = this.galleryImageIDs[previousImageIndex];
+      this.loadImage(currentImageUrl.replace(currentImageID, previousImageID));
+    }
+
+    if (nextImageIndex < this.galleryImageIDs.length) {
+      const nextImageID = this.galleryImageIDs[nextImageIndex];
+      this.loadImage(currentImageUrl.replace(currentImageID, nextImageID));
+    }
+  }
+
+  loadImage(imageUrl) {
+    const image = new Image();
+    image.src = imageUrl;
   }
 
   handleKeyPress(event) {
