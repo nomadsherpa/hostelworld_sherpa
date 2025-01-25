@@ -12,28 +12,13 @@
         "*://*.hostelworld.com/*"
       ],
       "js": [
-        "general.js"
-      ]
-    },
-    // Property details page
-    {
-      "matches": [
-        "*://*.hostelworld.com/pwa/wds/hosteldetails*"
-      ],
-      "js": [
-        "gallery.js"
+        "general.js",
+        "gallery.js",
+        "search_page.js",
+        "boot.js"
       ],
       "css": [
         "css/gallery.css"
-      ]
-    },
-    // Search page
-    {
-      "matches": [
-        "*://*.hostelworld.com/pwa/wds/s*"
-      ],
-      "js": [
-        "search_page.js"
       ]
     }
   ]

@@ -1,7 +1,7 @@
-.image-lightbox-container > img:first-child {
+.gallery-container .image-lightbox-container > img:first-child {
   margin-left: 3.5rem;
 }
 
-.image-lightbox-container > img:last-child {
+.gallery-container .image-lightbox-container > img:last-child {
   margin-right: 3.5rem;
 }

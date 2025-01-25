@@ -90,5 +90,3 @@ class SearchPage {
     });
   }
 }
-
-SearchPage.up();

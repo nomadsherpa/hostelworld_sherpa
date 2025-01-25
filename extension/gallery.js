@@ -119,5 +119,3 @@ class Gallery {
     }
   }
 }
-
-Gallery.up();
