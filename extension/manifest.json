@@ -13,6 +13,7 @@
       ],
       "js": [
         "general.js",
+        "default_currency_manager.js",
         "gallery.js",
         "search_page.js",
         "boot.js"

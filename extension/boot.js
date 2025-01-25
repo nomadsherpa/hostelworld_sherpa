@@ -1,3 +1,5 @@
+DefaultCurrencyManager.up();
+
 // Property details page?
 if (document.querySelector('.property')) {
   Gallery.up();
