@@ -9,7 +9,7 @@ class Gallery {
   }
 
   up() {
-    document.addEventListener('keydown', this.handleKeyPress);
+    this.setupArrowKeyNavigation();
 
     const observer = new MutationObserver((mutations) => {
       mutations.forEach((mutation) => {
@@ -76,6 +76,10 @@ class Gallery {
   loadImage(imageUrl) {
     const image = new Image();
     image.src = imageUrl;
+  }
+
+  setupArrowKeyNavigation() {
+    document.addEventListener('keydown', this.handleKeyPress);
   }
 
   handleKeyPress(event) {
