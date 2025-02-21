@@ -5,11 +5,7 @@ class SearchPage {
         mutation.addedNodes.forEach((element) => {
           if (
             element.classList &&
-            element.classList.contains(
-              'property-card-container',
-              'compact',
-              'horizontal'
-            )
+            element.classList.contains('property-card-container', 'compact')
           ) {
             SearchPage.addPropertyCardLink(element);
           }
