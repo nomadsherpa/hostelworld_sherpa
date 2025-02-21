@@ -20,7 +20,8 @@ class MitmdumpProxy
       "mitmdump",
       "-s", "spec/support/mitmdump/replay_config.py",
       "--server-replay", "#{CASSETTE_DIR}/#{cassette_name}.flows",
-      "--set", "connection_strategy=lazy"
+      "--set", "connection_strategy=lazy",
+      "--set", "server_replay_reuse=true"
     ]
 
     @pid = spawn(*command)
