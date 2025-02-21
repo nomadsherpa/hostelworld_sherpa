@@ -7,7 +7,7 @@ class SearchPage {
             element.classList &&
             element.classList.contains('property-card-container', 'compact')
           ) {
-            SearchPage.addPropertyCardLink(element);
+            SearchPage.addPropertyCardLinkAsync(element);
           }
         });
       }
@@ -19,11 +19,21 @@ class SearchPage {
     });
   }
 
+  static addPropertyCardLinkAsync(propertyCardElement) {
+    const imgElement = propertyCardElement.querySelector('img');
+
+    // Wait for the image to have a src attribute
+    const checkImgSrc = setInterval(() => {
+      if (imgElement.src) {
+        clearInterval(checkImgSrc);
+        SearchPage.addPropertyCardLink(propertyCardElement, imgElement);
+      }
+    }, 100);
+  }
+
   // Create a new anchor that wraps the entire card content
-  static addPropertyCardLink(propertyCardElement) {
-    const url = document.querySelector(
-      '.property-card-container.horizontal.selected'
-    ).href;
+  static addPropertyCardLink(propertyCardElement, propertyCardImageElement) {
+    const url = SearchPage.getPropertyUrl(propertyCardImageElement);
 
     const anchorElement = document.createElement('a');
     anchorElement.href = url;
@@ -33,7 +43,7 @@ class SearchPage {
       left: 0;
       width: 100%;
       height: 100%;
-      z-index: 1;
+      z-index: 3;
       text-decoration: none;
       background: transparent;
     `;
@@ -69,13 +79,7 @@ class SearchPage {
         mutation.addedNodes.forEach((node) => {
           if (node.tagName !== 'IMG') return;
 
-          const newUrl = document.querySelector(
-            '.property-card-container.horizontal.selected'
-          ).href;
-
-          if (newUrl) {
-            anchorElement.href = newUrl;
-          }
+          SearchPage.updatePropertyCardLinkAsync(anchorElement, node);
         });
       });
     });
@@ -84,5 +88,28 @@ class SearchPage {
       childList: true,
       subtree: true,
     });
+  }
+
+  static updatePropertyCardLinkAsync(anchorElement, propertyCardImageElement) {
+    // Wait for the image to have a src attribute
+    const checkImgSrc = setInterval(() => {
+      if (propertyCardImageElement.src) {
+        clearInterval(checkImgSrc);
+        anchorElement.href = SearchPage.getPropertyUrl(
+          propertyCardImageElement
+        );
+      }
+    }, 100);
+  }
+
+  static getPropertyUrl(propertyCardImageElement) {
+    const propertyId = propertyCardImageElement.src.split('/').slice(-2, -1)[0];
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const from = urlParams.get('from');
+    const to = urlParams.get('to');
+    const guests = urlParams.get('guests');
+
+    return `https://www.hostelworld.com/pwa/wds/hosteldetails.php/${propertyId}?from=${from}&to=${to}&guests=${guests}`;
   }
 }

@@ -5,7 +5,8 @@ class ConditionalResponse:
     def __init__(self):
         self.allowed_domains = {
             "hostelworld.com",
-            "hwstatic.com"
+            "hwstatic.com",
+            "api.mapbox.com"
         }
 
     def request(self, flow: http.HTTPFlow) -> None:
