@@ -1,5 +1,9 @@
 # frozen_string_literal: true
 
+# Testing this feature requires the backend of Hostelworld to see if
+# the selected currency is persisted after the user closes the browser
+# This test tests only if we save the selected currency
+# For the full test, see spec/currency_persistence_local_spec.rb
 describe "Currency Persistence", :ci_only, :proxy, type: :feature do
   let(:base_url) { "https://www.hostelworld.com" }
 
@@ -23,14 +27,14 @@ describe "Currency Persistence", :ci_only, :proxy, type: :feature do
     # And saves the selected currency to the local storage
     visit "chrome-extension://#{extension_id}/test.html"
 
-    stored_curency = page.evaluate_async_script(<<~JAVASCRIPT)
+    stored_currency = page.evaluate_async_script(<<~JAVASCRIPT)
       const done = arguments[0];
       chrome.storage.local.get('defaultCurrency').then(result => {
         done(result['defaultCurrency']);
       });
     JAVASCRIPT
 
-    expect(stored_curency).to eq("USD")
+    expect(stored_currency).to eq("USD")
   end
 
   def extension_id
