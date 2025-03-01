@@ -9,6 +9,9 @@
     "48": "assets/icon_48.png",
     "16": "assets/icon_16.png"
   },
+  "action": {
+    "default_popup": "popup/index.html"
+  },
   "permissions": [
     "storage"
   ],

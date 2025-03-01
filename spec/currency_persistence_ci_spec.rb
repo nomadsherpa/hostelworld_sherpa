@@ -25,7 +25,7 @@ describe "Currency Persistence", :ci_only, :proxy, type: :feature do
     expect(page).to have_no_css("body.not-reloaded")
 
     # And saves the selected currency to the local storage
-    visit "chrome-extension://#{extension_id}/test.html"
+    visit "chrome-extension://#{extension_id}/popup/index.html"
 
     stored_currency = page.evaluate_async_script(<<~JAVASCRIPT)
       const done = arguments[0];
