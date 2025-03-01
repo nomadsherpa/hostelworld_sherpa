@@ -18,7 +18,7 @@
         "*://*.hostelworld.com/*"
       ],
       "js": [
-        "general.js",
+        "close_dialogs_with_escape.js",
         "default_currency_manager.js",
         "gallery.js",
         "search_page.js",

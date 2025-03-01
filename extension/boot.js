@@ -13,6 +13,7 @@ if (
   SearchPage.up();
 }
 
+// Listen for page changes without reloading
 const observer = new MutationObserver((mutations) => {
   mutations.forEach((mutation) => {
     mutation.addedNodes.forEach((node) => {

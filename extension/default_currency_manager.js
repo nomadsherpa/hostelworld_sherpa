@@ -22,7 +22,7 @@ class DefaultCurrencyManager {
   static changeToDefault(defaultCurrency) {
     document.cookie = `currency=${defaultCurrency}; domain=.hostelworld.com; path=/; max-age=2147483647; SameSite=Strict`;
 
-    // Are we on the hostel details or search page?
+    // Are we on the property details or search page?
     if (
       window.location.pathname.includes('/hosteldetails.php') ||
       window.location.pathname.includes('/s')
