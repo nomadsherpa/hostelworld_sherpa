@@ -25,11 +25,3 @@ Then open this URL in your browser:
 ```sh
 http://localhost:7900/?autoconnect=1&resize=scale
 ```
-
-### Debugging test failures
-
-To stop and open a debugger on an expectation failure, set the `RSPEC_DEBUG_MODE` environment variable to `true` and run the tests:
-
-```sh
-RSPEC_DEBUG_MODE=true make test
-```

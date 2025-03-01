@@ -1,11 +1,8 @@
-export DOCKER_CONTAINER_NAME="hostelworld-sherpa-test-runner"
-export COMPOSE_PROJECT_NAME="hostelworld-sherpa"
+export DOCKER_CONTAINER_NAME="hostelworld-sherpa-test-runner" # keep
+export COMPOSE_PROJECT_NAME="hostelworld-sherpa" # keep
 
 alias enable_visual_testing="export HEADLESS=false"
 alias disable_visual_testing="unset HEADLESS"
-
-alias enable_rspec_debug_mode="export RSPEC_DEBUG_MODE=true"
-alias disable_rspec_debug_mode="unset RSPEC_DEBUG_MODE"
 
 alias t="make test"
 alias rs="t"

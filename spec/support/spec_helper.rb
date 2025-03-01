@@ -63,15 +63,6 @@ RSpec.configure do |config|
     MitmdumpProxy.eject_cassette
   end
 
-  if ENV["RSPEC_DEBUG_MODE"] == "true"
-    config.fail_fast = true
-    require "debug"
-
-    config.after do |example|
-      debugger if example.exception # rubocop:disable Lint/Debugger
-    end
-  end
-
   config.after do
     Capybara.current_session.driver.quit
   end
