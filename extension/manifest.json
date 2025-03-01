@@ -1,8 +1,14 @@
 {
   "manifest_version": 3,
   "name": "Hostelworld Sherpa",
-  "version": "0.0.1",
-  "description": "Improves the UX of Hostelworld",
+  "version": "1.0.0",
+  "description": "Improve the usability of Hostelworld",
+  "homepage_url": "https://github.com/sherpalabsio/hostelworld_sherpa/",
+  "icons": {
+    "128": "assets/icon_128.png",
+    "48": "assets/icon_48.png",
+    "16": "assets/icon_16.png"
+  },
   "permissions": [
     "storage"
   ],
